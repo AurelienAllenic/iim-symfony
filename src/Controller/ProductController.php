@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Notification;
 use App\Entity\Product;
+use App\Entity\User;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -102,5 +103,44 @@ final class ProductController extends AbstractController
 
         $this->addFlash('success', 'Produit supprimé.');
         return $this->redirectToRoute('app_products_list');
+    }
+
+    #[IsGranted('ROLE_USER')]
+    #[Route('/product/{id}/buy', name: 'app_product_buy', requirements: ['id' => '\d+'], methods: ['POST'])]
+    public function buy(Product $product, EntityManagerInterface $em): Response
+    {
+        /** @var User */
+        $user = $this->getUser();
+
+        // Vérifie si le produit a déjà été acheté
+        if ($product->getUser() !== null) {
+            $this->addFlash('warning', 'Ce produit a déjà été acheté.');
+            return $this->redirectToRoute('app_product_show', ['id' => $product->getId()]);
+        }
+
+        // Vérifie que l’utilisateur n'est pas désactivé
+        if (!$user->isActive()) {
+            $this->addFlash('error', 'Impossible d\'acheter étant inactif.');
+            return $this->redirectToRoute('app_product_show', ['id' => $product->getId()]);
+        }
+
+        // Vérifie les points de l’utilisateur
+        if ($user->getPoints() < $product->getPrice()) {
+            $this->addFlash('error', 'Points insuffisants pour acheter ce produit.');
+            return $this->redirectToRoute('app_product_show', ['id' => $product->getId()]);
+        }
+
+        $user->setPoints($user->getPoints() - $product->getPrice());
+        $product->setUser($user);
+
+        $notification = new Notification();
+        $notification->setLabel('[achat] produit: ' . $product->getName());
+        $notification->setUser($user);
+        $em->persist($notification);
+
+        $em->flush();
+
+        $this->addFlash('success', 'Produit acheté avec succès !');
+        return $this->redirectToRoute('app_product_show', ['id' => $product->getId()]);
     }
 }

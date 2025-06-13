@@ -10,6 +10,7 @@
 
 <div class="example-wrapper">
     <h1>Liste des produits</h1>
+    {% include 'includes/go_to_home_link.html.twig' %}
     {% if 'ROLE_ADMIN' in app.user.roles %}
         <p>
             <a href="{{ path('app_product_create') }}" class="btn btn-success">Ajouter un produit</a>

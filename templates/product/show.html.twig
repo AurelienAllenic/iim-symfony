@@ -48,6 +48,18 @@
         </tbody>
     </table>
 
+    {% if product.user is null and app.user.isActive and app.user.points >= product.price %}
+        <form method="post" action="{{ path('app_product_buy', {id: product.id}) }}" onsubmit="return confirm('Confirmer l\'achat ?');">
+            <button class="btn btn-success">Acheter pour {{ product.price }} points</button>
+        </form>
+    {% elseif app.user.points < product.price %}
+        <p><strong>Vous n'avez pas assez de points pour acheter cet article</strong></p>
+    {% elseif not app.user.isActive %}
+        <p><strong>User inactif, vous ne pouvez pas acheter de produit</strong></p>
+    {% elseif product.user is not null %}
+        <p><strong>Ce produit a déjà été acheté.</strong></p>
+    {% endif %}
+
     <p>
         <a href="{{ path('app_products_list') }}" class="btn btn-secondary">Retour à la liste</a>
     </p>
