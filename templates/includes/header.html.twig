@@ -1,0 +1,16 @@
+<header>
+    <p>
+        {% if app.user %}
+            Logged in as <a href="{{ path('app_profile_edit') }}"><strong>{{ app.user.firstName ~ ' ' ~ app.user.lastName }}</strong></a>
+            <br>{% if app.user.isActive %}Actif ✅{% else %}Inactif ❌{% endif %}
+            <br><strong>Points :</strong> {{ app.user.points }}<br>
+            <strong>Rôles :</strong>
+            {% for role in app.user.roles %}
+                {{ role }}{% if not loop.last %}, {% endif %}
+            {% endfor %}
+            <br><a href="{{ path('app_logout') }}">Logout</a>
+        {% else %}
+            <a href="{{ path('app_login') }}">Log in</a>
+        {% endif %}
+    </p>
+</header>
