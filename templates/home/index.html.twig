@@ -9,12 +9,10 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>IIM project</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/marti/Desktop/workspace/symfony-iim-last-version/src/Controller/HomeController.php</code></li>
-        <li>Your template at <code>C:/Users/marti/Desktop/workspace/symfony-iim-last-version/templates/home/index.html.twig</code></li>
-    </ul>
+    <p>
+        <a href="{{ path('app_products_list') }}">Liste des produits</a>
+    </p>
 </div>
 {% endblock %}
