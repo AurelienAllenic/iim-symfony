@@ -10,7 +10,11 @@
 
 <div class="example-wrapper">
     <h1>IIM project</h1>
-
+    {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
+        <p>
+            <a href="{{ path('app_notifications_list') }}">Liste des notifications</a>
+        </p>
+    {% endif %}
     <p>
         <a href="{{ path('app_products_list') }}">Liste des produits</a>
     </p>

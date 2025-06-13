@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello NotificationController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Liste des Notifications</h1>
+
+    {% include 'includes/go_to_home_link.html.twig' %}
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Label</th>
+                <th>Utilisateur</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for notification in notifications %}
+                <tr>
+                    <td>{{ notification.id }}</td>
+                    <td>{{ notification.label }}</td>
+                    <td>
+                        {{ notification.user.email }}
+                    </td>
+                    <td>{{ notification.createdAt|date('d/m/Y H:i:s') }}</td>
+                    <td>{{ notification.updatedAt|date('d/m/Y H:i:s') }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Aucune notification trouvée.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
