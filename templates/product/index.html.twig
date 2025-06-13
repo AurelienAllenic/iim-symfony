@@ -10,7 +10,12 @@
 
 <div class="example-wrapper">
     <h1>Liste des produits</h1>
-<table>
+    {% if 'ROLE_ADMIN' in app.user.roles %}
+        <p>
+            <a href="{{ path('app_product_create') }}" class="btn btn-success">Ajouter un produit</a>
+        </p>
+    {% endif %}
+    <table>
         <thead>
             <tr>
                 <th>Id</th>
@@ -41,6 +46,15 @@
                         <a href="{{ path('app_product_show', {id: product.id}) }}">
                             Voir&nbsp;👁️
                         </a>
+                        {% if 'ROLE_ADMIN' in app.user.roles %}
+                            <br><a href="{{ path('app_product_edit', {id: product.id}) }}">
+                                Modifier&nbsp;✏️
+                            </a>
+                            <br><a href="{{ path('app_product_delete', {id: product.id}) }}"
+                                onclick="return confirm('Voulez-vous vraiment supprimer ce produit ?');">
+                                Supprimer&nbsp;🗑️
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% else %}
