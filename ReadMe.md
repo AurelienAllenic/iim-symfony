@@ -126,6 +126,10 @@ symfony serve -d
 -   **Rôle** : `ROLE_USER`
 -   **Nom** : USER user
 
+### Modifier ses infos de profil
+
+-   Pour modifier les infos de profil, cliquez sur le nom de l'utilisateur en haut à droite
+
 ## 🔐 Sécurité
 
 -   Authentification par formulaire de connexion
@@ -151,6 +155,10 @@ symfony console messenger:consume async -vv
 -   Les routes sont bien listées sur la route /api
     MAIS
 -   Sans connexion via JWT il n'est pas possible de restreindre l'accès aux admins et on ne peut pas try it out les routes
+
+### Traduction
+
+-   La traduction en français et anglais a été ajoutée seulement pour les noms des listes sur la page d'accueil
 
 ## 🐛 Limitations Connues
 
