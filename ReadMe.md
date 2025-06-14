@@ -146,12 +146,19 @@ symfony serve -d
 symfony console messenger:consume async -vv
 ```
 
+### API Platform
+
+-   Les routes sont bien listées sur la route /api
+    MAIS
+-   Sans connexion via JWT il n'est pas possible de restreindre l'accès aux admins et on ne peut pas try it out les routes
+
 ## 🐛 Limitations Connues
 
 -   Interface utilisateur basique (focus sur la fonctionnalité)
 -   **Pas d'inscription** : seuls les comptes prédéfinis sont disponibles
 -   Design minimal (première expérience Symfony)
 -   Pas de système de traduction
+-   Pas de connexion via JWT
 
 ---
 
