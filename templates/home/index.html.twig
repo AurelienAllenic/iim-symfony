@@ -12,15 +12,15 @@
     <h1>IIM project</h1>
     {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
         <p>
-            <a href="{{ path('app_notifications_list') }}">Liste des notifications</a>
+            <a href="{{ path('app_notifications_list') }}">{% trans %}home.list_notifications{% endtrans %}</a>
         </p>
     {% endif %}
     <p>
-        <a href="{{ path('app_products_list') }}">Liste des produits</a>
+        <a href="{{ path('app_products_list') }}">{% trans %}home.list_products{% endtrans %}</a>
     </p>
     {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
         <p>
-            <a href="{{ path('app_users_list') }}">Liste des utilisateurs</a>
+            <a href="{{ path('app_users_list') }}">{% trans %}home.list_users{% endtrans %}</a>
         </p>
     {% endif %}
 </div>

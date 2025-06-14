@@ -15,6 +15,7 @@
         "symfony/framework-bundle": "7.3.*",
         "symfony/messenger": "7.3.*",
         "symfony/runtime": "7.3.*",
+        "symfony/translation": "7.3.*",
         "symfony/webapp-pack": "*",
         "symfony/yaml": "7.3.*"
     },

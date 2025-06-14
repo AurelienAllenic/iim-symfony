@@ -13,4 +13,13 @@
             <a href="{{ path('app_login') }}">Log in</a>
         {% endif %}
     </p>
+    {% for locale in locales %}
+        {% if locale != app.request.locale %}
+            <a class="link-secondary" href="{{ path('app_locale', {'locale': locale}) }}" hreflang="{{ locale }}">
+                {{ locale }}
+            </a>
+        {% else %}
+            <span>{{ locale }}</span>
+        {% endif %}
+    {% endfor %}
 </header>

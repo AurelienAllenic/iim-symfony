@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="cGudL2b" resname="home.list_notifications">
+        <source>home.list_notifications</source>
+        <target>Liste des notifications</target>
+      </trans-unit>
+      <trans-unit id="bBc6Q4v" resname="home.list_products">
+        <source>home.list_products</source>
+        <target>Liste des produits</target>
+      </trans-unit>
+      <trans-unit id="qyhGNFd" resname="home.list_users">
+        <source>home.list_users</source>
+        <target>Liste des utilisateurs</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
