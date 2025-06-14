@@ -139,6 +139,12 @@ symfony serve -d
 
 -   Attribution de points en masse via Symfony Messenger
 -   Traitement asynchrone des notifications
+-   Ajouter 1000 points à tous les users actifs va ajouter une entrée dans la table messenger_messages
+-   Pour consommer les messages :
+
+```
+symfony console messenger:consume async -vv
+```
 
 ## 🐛 Limitations Connues
 
