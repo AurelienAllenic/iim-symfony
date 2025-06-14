@@ -7,6 +7,7 @@ use App\Entity\Product;
 use App\Entity\User;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
+use App\Service\NotificationManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,8 +37,11 @@ final class ProductController extends AbstractController
     }
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/product/new', name: 'app_product_create')]
-    public function create(Request $request, EntityManagerInterface $em): Response
-    {
+    public function create(
+        Request $request,
+        EntityManagerInterface $em,
+        NotificationManager $notificationManager
+    ): Response {
         $product = new Product();
 
         $form = $this->createForm(ProductType::class, $product);
@@ -46,12 +50,7 @@ final class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($product);
 
-            $notification = new Notification();
-            $notification->setLabel('[creation] produit: ' . $product->getName());
-            $notification->setUser($this->getUser());
-            $em->persist($notification);
-
-            $em->flush();
+            $notificationManager->addProductNotification('creation', $product, $this->getUser());
 
             $this->addFlash('success', 'Produit ajouté avec succès !');
             return $this->redirectToRoute('app_products_list');
@@ -65,18 +64,16 @@ final class ProductController extends AbstractController
 
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/product/{id}/edit', name: 'app_product_edit')]
-    public function edit(Request $request, Product $product, EntityManagerInterface $em): Response
-    {
+    public function edit(
+        Request $request,
+        Product $product,
+        NotificationManager $notificationManager
+    ): Response {
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $notification = new Notification();
-            $notification->setLabel('[modification] produit: ' . $product->getName());
-            $notification->setUser($this->getUser());
-            $em->persist($notification);
-
-            $em->flush();
+            $notificationManager->addProductNotification('modification', $product, $this->getUser());
 
             $this->addFlash('success', 'Produit modifié avec succès.');
             return $this->redirectToRoute('app_products_list');
@@ -90,15 +87,14 @@ final class ProductController extends AbstractController
 
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/product/{id}/delete', name: 'app_product_delete')]
-    public function delete(Product $product, EntityManagerInterface $em): Response
-    {
+    public function delete(
+        Product $product,
+        EntityManagerInterface $em,
+        NotificationManager $notificationManager
+    ): Response {
         $em->remove($product);
 
-        $notification = new Notification();
-        $notification->setLabel('[suppression] produit: ' . $product->getName());
-        $notification->setUser($this->getUser());
-        $em->persist($notification);
-
+        $notificationManager->addProductNotification('suppression', $product, $this->getUser());
         $em->flush();
 
         $this->addFlash('success', 'Produit supprimé.');
