@@ -13,10 +13,14 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[ApiResource(
     operations: [
-        new Get(normalizationContext: ['groups' => 'product:item']),
-        new GetCollection(normalizationContext: ['groups' => 'product:list'])
+        new Get(
+            normalizationContext: ['groups' => 'product:item'],
+        ),
+        new GetCollection(
+            normalizationContext: ['groups' => 'product:list'],
+            )
     ],
-    order: ['updateAt' => 'DESC', 'createdAt' => 'ASC'],
+    order: ['updatedAt' => 'DESC', 'createdAt' => 'ASC'],
     paginationEnabled: false,
 )]
 class Product
